@@ -12,6 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import sp.ax.jc.dialogs.Dialog
 
 internal class MainActivity : AppCompatActivity() {
     override fun onCreate(inState: Bundle?) {
@@ -30,23 +35,35 @@ internal class MainActivity : AppCompatActivity() {
                     .background(Color.Black),
             ) {
                 Column(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .align(Alignment.Center),
                 ) {
                     val context = LocalContext.current
+                    var dialog by remember { mutableStateOf(false) }
                     BasicText(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .height(56.dp)
                             .clickable {
-                                // todo
+                                dialog = true
                             }
                             .wrapContentHeight(),
-                        text = "clicks",
+                        text = "open dialog",
                         style = TextStyle(
                             textAlign = TextAlign.Center,
                             color = Color.White,
                         ),
                     )
+                    if (dialog) {
+                        Dialog(
+                            modifier = Modifier.background(Color.White),
+                            onDismissRequest = {
+                                dialog = false
+                            },
+                            message = "dialog with message",
+                        )
+                    }
                 }
             }
         }
