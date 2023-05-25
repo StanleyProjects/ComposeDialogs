@@ -1,6 +1,8 @@
 import com.android.build.gradle.api.BaseVariant
 import sp.gx.core.GitHub
 import sp.gx.core.Maven
+import sp.gx.core.camelCase
+import sp.gx.core.colonCase
 import sp.gx.core.kebabCase
 
 version = "0.0.1"
@@ -48,17 +50,6 @@ android {
         manifestPlaceholders["appName"] = "@string/app_name"
     }
 
-    productFlavors {
-        mapOf("version" to setOf("snapshot")).forEach { (dimension, flavors) ->
-            flavorDimensions += dimension
-            flavors.forEach { flavor ->
-                create(flavor) {
-                    this.dimension = dimension
-                }
-            }
-        }
-    }
-
     buildFeatures.compose = true
 
     composeOptions.kotlinCompilerExtensionVersion = Version.Android.compose
@@ -67,17 +58,16 @@ android {
         val variant = this
         val output = variant.outputs.single()
         check(output is com.android.build.gradle.internal.api.LibraryVariantOutputImpl)
-        val versionName = when (variant.buildType.name) {
-            "release" -> "${Version.Application.name}-${variant.flavorName}"
-            else -> "${Version.Application.name}-${variant.name}"
-        }
-        output.outputFileName = "${rootProject.name}-${versionName}-${Version.Application.code}.aar"
+        output.outputFileName = getOutputFileName("aar")
         afterEvaluate {
-            tasks.getByName<JavaCompile>("compile${variant.name.capitalize()}JavaWithJavac") {
+            tasks.getByName<JavaCompile>(camelCase("compile", variant.name, "JavaWithJavac")) {
                 targetCompatibility = Version.jvmTarget
             }
-            tasks.getByName<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compile${variant.name.capitalize()}Kotlin") {
-                kotlinOptions.jvmTarget = Version.jvmTarget
+            tasks.getByName<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>(camelCase("compile", variant.name, "Kotlin")) {
+                kotlinOptions {
+                    jvmTarget = Version.jvmTarget
+                    freeCompilerArgs = freeCompilerArgs + setOf("-module-name", colonCase(maven.group, maven.id))
+                }
             }
         }
     }
