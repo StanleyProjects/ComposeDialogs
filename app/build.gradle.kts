@@ -1,3 +1,7 @@
+import sp.gx.core.camelCase
+import sp.gx.core.filled
+import sp.gx.core.kebabCase
+
 repositories {
     google()
     mavenCentral()
@@ -18,8 +22,8 @@ android {
         applicationId = appId
         minSdk = Version.Android.minSdk
         targetSdk = Version.Android.targetSdk
-        versionName = Version.Application.name
-        versionCode = Version.Application.code
+        versionName = "0.0.1"
+        versionCode = 1
         manifestPlaceholders["appName"] = "@string/app_name"
     }
 
@@ -41,12 +45,18 @@ android {
 androidComponents.onVariants { variant ->
     val output = variant.outputs.single()
     check(output is com.android.build.api.variant.impl.VariantOutputImpl)
-    output.outputFileName.set("${rootProject.name}Sample-${Version.Application.name}-${variant.name}-${Version.Application.code}.apk")
+    val outputFileName = kebabCase(
+        camelCase(rootProject.name, "Sample"),
+        android.defaultConfig.versionName!!.filled(),
+        variant.name,
+        android.defaultConfig.versionCode!!.toString(),
+    )
+    output.outputFileName.set("$outputFileName.apk")
     afterEvaluate {
-        tasks.getByName<JavaCompile>("compile${variant.name.capitalize()}JavaWithJavac") {
+        tasks.getByName<JavaCompile>(camelCase("compile", variant.name, "JavaWithJavac")) {
             targetCompatibility = Version.jvmTarget
         }
-        tasks.getByName<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compile${variant.name.capitalize()}Kotlin") {
+        tasks.getByName<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>(camelCase("compile", variant.name, "Kotlin")) {
             kotlinOptions.jvmTarget = Version.jvmTarget
         }
     }
