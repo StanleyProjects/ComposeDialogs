@@ -2,7 +2,9 @@ package sp.ax.jc.dialogs
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,37 +23,58 @@ import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 internal class DialogTest {
+    object Tag {
+        const val dialog = "dialog"
+        const val show = "show"
+        const val hide = "hide"
+    }
+
     @get:Rule
     val rule = createComposeRule()
 
     @Test
-    fun fooTest() {
-        val dialogTag = "foo"
+    fun showHideTest() {
         val message = "bar"
-        val buttonTag = "baz"
         rule.setContent {
             var value by remember { mutableStateOf(false) }
             if (value) {
                 Dialog(
-                    modifier = Modifier.testTag(dialogTag),
+                    modifier = Modifier.testTag(Tag.dialog),
                     onDismissRequest = {
                         value = false
                     },
                     message = message,
                 )
             }
-            Box(
-                modifier = Modifier.fillMaxSize()
-                    .testTag(buttonTag)
-                    .clickable {
-                        value = true
-                    },
-            )
+            Column(Modifier.fillMaxSize()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .testTag(Tag.show)
+                        .clickable {
+                            value = true
+                        },
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .testTag(Tag.hide)
+                        .clickable {
+                            value = false
+                        },
+                )
+            }
         }
-        rule.onNodeWithTag(dialogTag).assertDoesNotExist()
-        rule.onNodeWithTag(buttonTag).performClick()
-        rule.onNodeWithTag(dialogTag).assertIsDisplayed()
+        rule.onNodeWithTag(Tag.dialog).assertDoesNotExist()
+        rule.onNodeWithTag(Tag.show).performClick()
+        rule.onNodeWithTag(Tag.dialog).assertIsDisplayed()
+        rule.onNodeWithTag(Tag.hide).performClick()
+        rule.onNodeWithTag(Tag.dialog).assertDoesNotExist()
+        rule.onNodeWithTag(Tag.show).performClick()
+        rule.onNodeWithTag(Tag.dialog).assertIsDisplayed()
         Espresso.pressBack()
-        rule.onNodeWithTag(dialogTag).assertDoesNotExist()
+        rule.onNodeWithTag(Tag.dialog).assertDoesNotExist()
     }
 }
