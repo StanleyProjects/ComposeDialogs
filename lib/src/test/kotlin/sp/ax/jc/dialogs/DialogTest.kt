@@ -17,6 +17,7 @@ import androidx.compose.ui.test.filter
 import androidx.compose.ui.test.filterToOne
 import androidx.compose.ui.test.hasTextExactly
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onChild
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
@@ -33,7 +34,74 @@ internal class DialogTest {
     val rule = createComposeRule()
 
     @Test
-    fun fooTest() {
+    fun showHideTest() {
+        val dialog = "dialog"
+        val show = "show"
+        val hide = "hide"
+        val title = "title"
+        val message = "message"
+        val button = "button"
+        rule.setContent {
+            var value by remember { mutableStateOf(false) }
+            if (value) {
+                Dialog(
+                    modifier = Modifier.testTag(dialog),
+                    onDismissRequest = {
+                        value = false
+                    },
+                    title = Dialog.Text(
+                        modifier = Modifier,
+                        value = title,
+                        style = TextStyle(),
+                    ),
+                    message = Dialog.Text(
+                        modifier = Modifier,
+                        value = message,
+                        style = TextStyle(),
+                    ),
+                    buttons = listOf(
+                        Dialog.Text(
+                            modifier = Modifier,
+                            value = button,
+                            style = TextStyle(),
+                        ),
+                    )
+                )
+            }
+            Column(Modifier.fillMaxSize()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .testTag(show)
+                        .clickable {
+                            value = true
+                        },
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .testTag(hide)
+                        .clickable {
+                            value = false
+                        },
+                )
+            }
+        }
+        rule.onNodeWithTag(dialog).assertDoesNotExist()
+        rule.onNodeWithTag(show).performClick()
+        rule.onNodeWithTag(dialog).assertIsDisplayed()
+        rule.onNodeWithTag(hide).performClick()
+        rule.onNodeWithTag(dialog).assertDoesNotExist()
+        rule.onNodeWithTag(show).performClick()
+        rule.onNodeWithTag(dialog).assertIsDisplayed()
+        Espresso.pressBack()
+        rule.onNodeWithTag(dialog).assertDoesNotExist()
+    }
+
+    @Test
+    fun textsTest() {
         val dialog = "dialog"
         val show = "show"
         val hide = "hide"
@@ -95,11 +163,10 @@ internal class DialogTest {
         rule.onNodeWithTag(dialog).assertDoesNotExist()
         rule.onNodeWithTag(show).performClick()
         rule.onNodeWithTag(dialog).assertIsDisplayed()
-        rule.onNodeWithTag(hide).performClick()
-        rule.onNodeWithTag(dialog).assertDoesNotExist()
-        rule.onNodeWithTag(show).performClick()
-        rule.onNodeWithTag(dialog).assertIsDisplayed()
-        Espresso.pressBack()
+        rule.onNodeWithTag(dialog).onChildren().filterToOne(hasTextExactly(title)).assertIsDisplayed()
+        rule.onNodeWithTag(dialog).onChildren().filterToOne(hasTextExactly(message)).assertIsDisplayed()
+        rule.onNodeWithTag(dialog).onChildren().filterToOne(hasTextExactly(button)).assertIsDisplayed()
+        rule.onNodeWithTag(button).performClick()
         rule.onNodeWithTag(dialog).assertDoesNotExist()
     }
 }
