@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,13 +25,111 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import sp.ax.jc.dialogs.Dialog
 
 internal class MainActivity : AppCompatActivity() {
+    @Composable
+    private fun OnDialog(onDismissRequest: () -> Unit) {
+        val dialog = "dialog"
+        val title = "title"
+        val message = "message"
+        val button = "button"
+        Dialog(
+            modifier = Modifier.testTag(dialog).background(Color.Red),
+            onDismissRequest = onDismissRequest,
+            properties = DialogProperties(
+                dismissOnBackPress = true,
+                dismissOnClickOutside = true,
+            ),
+            title = Dialog.Text(
+                modifier = Modifier,
+                value = title,
+                style = TextStyle(),
+            ),
+            message = Dialog.Text(
+                modifier = Modifier,
+                value = message,
+                style = TextStyle(),
+            ),
+            buttons = listOf(
+                Dialog.Text(
+                    modifier = Modifier,
+                    value = button,
+                    style = TextStyle(),
+                ),
+            )
+        )
+    }
+
+    @Composable
+    private fun OnDialogOld(onDismissRequest: () -> Unit) {
+        Dialog(
+            modifier = Modifier
+                .defaultMinSize(280.dp)
+                .background(
+                    color = Color.White,
+                    shape = RoundedCornerShape(28.dp),
+                )
+                .padding(24.dp),
+            onDismissRequest = onDismissRequest,
+            properties = DialogProperties(
+                dismissOnBackPress = true,
+                dismissOnClickOutside = true,
+            ),
+            title = Dialog.Text(
+                modifier = Modifier
+                    .padding(bottom = 16.dp),
+                value = "title",
+                style = TextStyle(fontSize = 24.sp),
+            ),
+            message = Dialog.Text(
+                modifier = Modifier
+                    .padding(bottom = 24.dp),
+                value = "message",
+                style = TextStyle(fontSize = 14.sp),
+            ),
+            buttons = listOf(
+                Dialog.Text(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(20.dp))
+                        .height(40.dp)
+                        .clickable { onDismissRequest() }
+                        .padding(start = 12.dp, end = 12.dp)
+                        .wrapContentHeight(),
+                    value = "foo",
+                    style = TextStyle(fontSize = 14.sp),
+                ),
+                Dialog.Text(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(20.dp))
+                        .height(40.dp)
+                        .clickable { onDismissRequest() }
+                        .padding(start = 12.dp, end = 12.dp)
+                        .wrapContentHeight(),
+                    value = "cancel",
+                    style = TextStyle(fontSize = 14.sp),
+                ),
+                Dialog.Text(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(20.dp))
+                        .height(40.dp)
+                        .clickable { onDismissRequest() }
+                        .padding(start = 12.dp, end = 12.dp)
+                        .wrapContentHeight(),
+                    value = "ok",
+                    style = TextStyle(fontSize = 14.sp),
+                ),
+            ),
+        )
+    }
+
     override fun onCreate(inState: Bundle?) {
         super.onCreate(inState)
         setContent {
@@ -61,61 +160,10 @@ internal class MainActivity : AppCompatActivity() {
                         ),
                     )
                     if (dialog) {
-                        Dialog(
-                            modifier = Modifier
-                                .defaultMinSize(280.dp)
-                                .background(
-                                    color = Color.White,
-                                    shape = RoundedCornerShape(28.dp),
-                                )
-                                .padding(24.dp),
+                        OnDialog(
                             onDismissRequest = {
                                 dialog = false
                             },
-                            title = Dialog.Text(
-                                modifier = Modifier
-                                    .padding(bottom = 16.dp),
-                                value = "title",
-                                style = TextStyle(fontSize = 24.sp),
-                            ),
-                            message = Dialog.Text(
-                                modifier = Modifier
-                                    .padding(bottom = 24.dp),
-                                value = "message",
-                                style = TextStyle(fontSize = 14.sp),
-                            ),
-                            buttons = listOf(
-                                Dialog.Text(
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(20.dp))
-                                        .height(40.dp)
-                                        .clickable { dialog = false }
-                                        .padding(start = 12.dp, end = 12.dp)
-                                        .wrapContentHeight(),
-                                    value = "foo",
-                                    style = TextStyle(fontSize = 14.sp),
-                                ),
-                                Dialog.Text(
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(20.dp))
-                                        .height(40.dp)
-                                        .clickable { dialog = false }
-                                        .padding(start = 12.dp, end = 12.dp)
-                                        .wrapContentHeight(),
-                                    value = "cancel",
-                                    style = TextStyle(fontSize = 14.sp),
-                                ),
-                                Dialog.Text(
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(20.dp))
-                                        .height(40.dp)
-                                        .clickable { dialog = false }
-                                        .padding(start = 12.dp, end = 12.dp)
-                                        .wrapContentHeight(),
-                                    value = "ok",
-                                    style = TextStyle(fontSize = 14.sp),
-                                ),
-                            ),
                         )
                     }
                 }
