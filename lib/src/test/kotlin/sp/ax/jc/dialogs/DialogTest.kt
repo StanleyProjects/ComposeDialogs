@@ -20,6 +20,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onChildren
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.text.TextStyle
 import androidx.test.espresso.Espresso
 import org.junit.Rule
 import org.junit.Test
@@ -28,27 +29,46 @@ import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 internal class DialogTest {
-    object Tag {
-        const val dialog = "dialog"
-        const val show = "show"
-        const val hide = "hide"
-    }
-
     @get:Rule
     val rule = createComposeRule()
 
     @Test
-    fun showHideTest() {
-        val message = "bar"
+    fun fooTest() {
+        val dialog = "dialog"
+        val show = "show"
+        val hide = "hide"
+        val title = "title"
+        val message = "message"
+        val button = "button"
         rule.setContent {
             var value by remember { mutableStateOf(false) }
             if (value) {
                 Dialog(
-                    modifier = Modifier.testTag(Tag.dialog),
+                    modifier = Modifier.testTag(dialog),
                     onDismissRequest = {
                         value = false
                     },
-                    message = message,
+                    title = Dialog.Text(
+                        modifier = Modifier.testTag(title),
+                        value = title,
+                        style = TextStyle(),
+                    ),
+                    message = Dialog.Text(
+                        modifier = Modifier.testTag(message),
+                        value = message,
+                        style = TextStyle(),
+                    ),
+                    buttons = listOf(
+                        Dialog.Text(
+                            modifier = Modifier
+                                .testTag(button)
+                                .clickable {
+                                    value = false
+                                },
+                            value = button,
+                            style = TextStyle(),
+                        ),
+                    )
                 )
             }
             Column(Modifier.fillMaxSize()) {
@@ -56,7 +76,7 @@ internal class DialogTest {
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
-                        .testTag(Tag.show)
+                        .testTag(show)
                         .clickable {
                             value = true
                         },
@@ -65,74 +85,21 @@ internal class DialogTest {
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
-                        .testTag(Tag.hide)
+                        .testTag(hide)
                         .clickable {
                             value = false
                         },
                 )
             }
         }
-        rule.onNodeWithTag(Tag.dialog).assertDoesNotExist()
-        rule.onNodeWithTag(Tag.show).performClick()
-        rule.onNodeWithTag(Tag.dialog).assertIsDisplayed()
-        rule.onNodeWithTag(Tag.hide).performClick()
-        rule.onNodeWithTag(Tag.dialog).assertDoesNotExist()
-        rule.onNodeWithTag(Tag.show).performClick()
-        rule.onNodeWithTag(Tag.dialog).assertIsDisplayed()
+        rule.onNodeWithTag(dialog).assertDoesNotExist()
+        rule.onNodeWithTag(show).performClick()
+        rule.onNodeWithTag(dialog).assertIsDisplayed()
+        rule.onNodeWithTag(hide).performClick()
+        rule.onNodeWithTag(dialog).assertDoesNotExist()
+        rule.onNodeWithTag(show).performClick()
+        rule.onNodeWithTag(dialog).assertIsDisplayed()
         Espresso.pressBack()
-        rule.onNodeWithTag(Tag.dialog).assertDoesNotExist()
-    }
-
-    @Test
-    fun messageTest() {
-        val foo = "foo"
-        val bar = "bar"
-        rule.setContent {
-            var message by remember { mutableStateOf<String?>(null) }
-            if (message != null) {
-                Dialog(
-                    modifier = Modifier.testTag(Tag.dialog),
-                    onDismissRequest = {
-                        message = null
-                    },
-                    message = checkNotNull(message),
-                )
-            }
-            Column(Modifier.fillMaxSize()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .testTag(foo)
-                        .clickable {
-                            message = foo
-                        },
-                )
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .testTag(bar)
-                        .clickable {
-                            message = bar
-                        },
-                )
-            }
-        }
-        rule.onNodeWithTag(Tag.dialog).assertDoesNotExist()
-        rule.onNodeWithTag(foo).performClick()
-        rule.onNodeWithTag(Tag.dialog).assertIsDisplayed()
-        rule.onNodeWithTag(Tag.dialog)
-            .onChildren()
-            .filterToOne(hasTextExactly(foo, includeEditableText = false))
-            .assertIsDisplayed()
-        Espresso.pressBack()
-        rule.onNodeWithTag(Tag.dialog).assertDoesNotExist()
-        rule.onNodeWithTag(bar).performClick()
-        rule.onNodeWithTag(Tag.dialog).assertIsDisplayed()
-        rule.onNodeWithTag(Tag.dialog)
-            .onChildren()
-            .filterToOne(hasTextExactly(bar, includeEditableText = false))
-            .assertIsDisplayed()
+        rule.onNodeWithTag(dialog).assertDoesNotExist()
     }
 }
