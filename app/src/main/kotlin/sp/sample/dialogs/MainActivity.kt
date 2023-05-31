@@ -204,31 +204,9 @@ internal class MainActivity : AppCompatActivity() {
                         )
                         if (dialog) {
                             Dialog(
-                                modifier = Modifier
-                                    .defaultMinSize(minWidth = 280.dp, minHeight = Dp.Unspecified)
-                                    .background(
-                                        color = Color.White,
-                                        shape = RoundedCornerShape(28.dp),
-                                    )
-                                    .padding(PaddingValues(24.dp)),
-                                alignment = Alignment.Start,
+                                "foo" to { dialog = false },
                                 onDismissRequest = { dialog = false },
-                                properties = DialogProperties(),
-                                message = Dialog.Text(
-                                    modifier = Modifier,
-                                    value = "${System.currentTimeMillis()}ms",
-                                    style = TextStyle(fontSize = 14.sp, color = Color.Black),
-                                ),
-                                button = Dialog.Text(
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(20.dp))
-                                        .height(40.dp)
-                                        .clickable { dialog = false }
-                                        .padding(start = 12.dp, end = 12.dp)
-                                        .wrapContentHeight(),
-                                    value = "foo",
-                                    style = TextStyle(fontSize = 14.sp),
-                                ),
+                                message = "${System.currentTimeMillis()}ms",
                             )
                         }
                     }
@@ -242,42 +220,10 @@ internal class MainActivity : AppCompatActivity() {
                         )
                         if (dialog) {
                             Dialog(
-                                modifier = Modifier
-                                    .defaultMinSize(minWidth = 280.dp, minHeight = Dp.Unspecified)
-                                    .background(
-                                        color = Color.White,
-                                        shape = RoundedCornerShape(28.dp),
-                                    )
-                                    .padding(PaddingValues(24.dp)),
-                                alignment = Alignment.Start,
+                                "foo" to { dialog = false },
+                                "bar" to { dialog = false },
                                 onDismissRequest = { dialog = false },
-                                properties = DialogProperties(),
-                                message = Dialog.Text(
-                                    modifier = Modifier
-                                        .padding(bottom = 24.dp),
-                                    value = "${System.currentTimeMillis()}ms",
-                                    style = TextStyle(fontSize = 14.sp, color = Color.Black),
-                                ),
-                                Dialog.Text(
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(20.dp))
-                                        .height(40.dp)
-                                        .clickable { dialog = false }
-                                        .padding(start = 12.dp, end = 12.dp)
-                                        .wrapContentHeight(),
-                                    value = "foo",
-                                    style = TextStyle(fontSize = 14.sp),
-                                ),
-                                Dialog.Text(
-                                    modifier = Modifier
-                                        .clip(RoundedCornerShape(20.dp))
-                                        .height(40.dp)
-                                        .clickable { dialog = false }
-                                        .padding(start = 12.dp, end = 12.dp)
-                                        .wrapContentHeight(),
-                                    value = "bar",
-                                    style = TextStyle(fontSize = 14.sp),
-                                ),
+                                message = "${System.currentTimeMillis()}ms",
                             )
                         }
                     }

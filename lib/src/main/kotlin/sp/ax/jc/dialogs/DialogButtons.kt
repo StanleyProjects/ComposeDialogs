@@ -1,14 +1,28 @@
 package sp.ax.jc.dialogs
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
@@ -50,4 +64,60 @@ fun Dialog(
             }
         }
     }
+}
+
+@Composable
+fun Dialog(
+    button: Pair<String, () -> Unit>,
+    vararg buttons: Pair<String, () -> Unit>,
+    minWidth: Dp = 280.dp,
+    minHeight: Dp = Dp.Unspecified,
+    color: Color = Color.White,
+    shape: Shape = RoundedCornerShape(28.dp),
+    padding: PaddingValues = PaddingValues(24.dp),
+    alignment: Alignment.Horizontal = Alignment.Start,
+    onDismissRequest: () -> Unit,
+    properties: DialogProperties = DialogProperties(),
+    message: String,
+) {
+    Dialog(
+        modifier = Modifier
+            .defaultMinSize(minWidth = minWidth, minHeight = minHeight)
+            .background(
+                color = color,
+                shape = shape,
+            )
+            .padding(padding),
+        alignment = alignment,
+        onDismissRequest = onDismissRequest,
+        properties = properties,
+        message = Dialog.Text(
+            modifier = Modifier
+                .padding(bottom = 24.dp),
+            value = message,
+            style = TextStyle(fontSize = 14.sp, color = Color.Black),
+        ),
+        button = Dialog.Text(
+            modifier = Modifier
+                .clip(RoundedCornerShape(20.dp))
+                .height(40.dp)
+                .clickable(onClick = button.second)
+                .padding(start = 12.dp, end = 12.dp)
+                .wrapContentHeight(),
+            value = button.first,
+            style = TextStyle(fontSize = 14.sp, color = Color.Black),
+        ),
+        buttons = buttons.map {
+            Dialog.Text(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20.dp))
+                    .height(40.dp)
+                    .clickable(onClick = it.second)
+                    .padding(start = 12.dp, end = 12.dp)
+                    .wrapContentHeight(),
+                value = it.first,
+                style = TextStyle(fontSize = 14.sp, color = Color.Black),
+            )
+        }.toTypedArray()
+    )
 }
