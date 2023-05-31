@@ -24,6 +24,7 @@ object Dialog {
 @Composable
 fun Dialog(
     modifier: Modifier,
+    alignment: Alignment.Horizontal,
     onDismissRequest: () -> Unit,
     properties: DialogProperties = DialogProperties(),
     message: Dialog.Text,
@@ -32,7 +33,7 @@ fun Dialog(
         onDismissRequest = onDismissRequest,
         properties = properties,
     ) {
-        Column(modifier = modifier) {
+        Column(modifier = modifier, horizontalAlignment = alignment) {
             check(message.value.isNotEmpty())
             BasicText(
                 modifier = message.modifier,

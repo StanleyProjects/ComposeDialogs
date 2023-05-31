@@ -178,11 +178,14 @@ internal class MainActivity : AppCompatActivity() {
                                         shape = RoundedCornerShape(28.dp),
                                     )
                                     .padding(24.dp),
+                                alignment = Alignment.CenterHorizontally,
                                 onDismissRequest = { dialog = false },
                                 message = Dialog.Text(
                                     modifier = Modifier,
-                                    value = "message",
-                                    style = TextStyle(fontSize = 14.sp),
+                                    value = "${System.currentTimeMillis()}ms",
+                                    style = TextStyle(
+                                        fontSize = 14.sp,
+                                    ),
                                 ),
                             )
                         }
