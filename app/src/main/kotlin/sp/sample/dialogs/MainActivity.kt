@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +30,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
@@ -171,22 +173,8 @@ internal class MainActivity : AppCompatActivity() {
                         )
                         if (dialog) {
                             Dialog(
-                                modifier = Modifier
-                                    .defaultMinSize(280.dp)
-                                    .background(
-                                        color = Color.White,
-                                        shape = RoundedCornerShape(28.dp),
-                                    )
-                                    .padding(24.dp),
-                                alignment = Alignment.CenterHorizontally,
                                 onDismissRequest = { dialog = false },
-                                message = Dialog.Text(
-                                    modifier = Modifier,
-                                    value = "${System.currentTimeMillis()}ms",
-                                    style = TextStyle(
-                                        fontSize = 14.sp,
-                                    ),
-                                ),
+                                message = "${System.currentTimeMillis()}ms",
                             )
                         }
                     }
