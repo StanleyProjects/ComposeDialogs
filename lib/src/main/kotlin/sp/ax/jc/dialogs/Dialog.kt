@@ -26,6 +26,28 @@ fun Dialog(
     modifier: Modifier,
     onDismissRequest: () -> Unit,
     properties: DialogProperties = DialogProperties(),
+    message: Dialog.Text,
+) {
+    Dialog(
+        onDismissRequest = onDismissRequest,
+        properties = properties,
+    ) {
+        Column(modifier = modifier) {
+            check(message.value.isNotEmpty())
+            BasicText(
+                modifier = message.modifier,
+                text = message.value,
+                style = message.style,
+            )
+        }
+    }
+}
+
+@Composable
+fun Dialog(
+    modifier: Modifier,
+    onDismissRequest: () -> Unit,
+    properties: DialogProperties = DialogProperties(),
     title: Dialog.Text,
     message: Dialog.Text,
     buttons: List<Dialog.Text>,

@@ -42,7 +42,9 @@ internal class MainActivity : AppCompatActivity() {
         val message = "message"
         val button = "button"
         Dialog(
-            modifier = Modifier.testTag(dialog).background(Color.Red),
+            modifier = Modifier
+                .testTag(dialog)
+                .background(Color.Red),
             onDismissRequest = onDismissRequest,
             properties = DialogProperties(
                 dismissOnBackPress = true,
@@ -130,6 +132,22 @@ internal class MainActivity : AppCompatActivity() {
         )
     }
 
+    @Composable
+    private fun Button(text: String, onClick: () -> Unit) {
+        BasicText(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp)
+                .clickable(onClick = onClick)
+                .wrapContentHeight(),
+            text = text,
+            style = TextStyle(
+                textAlign = TextAlign.Center,
+                color = Color.White,
+            ),
+        )
+    }
+
     override fun onCreate(inState: Bundle?) {
         super.onCreate(inState)
         setContent {
@@ -143,28 +161,31 @@ internal class MainActivity : AppCompatActivity() {
                         .fillMaxWidth()
                         .align(Alignment.Center),
                 ) {
-                    val context = LocalContext.current
-                    var dialog by remember { mutableStateOf(false) }
-                    BasicText(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp)
-                            .clickable {
+                    "dialog message".also { text ->
+                        var dialog by remember { mutableStateOf(false) }
+                        Button(
+                            text = text,
+                            onClick = {
                                 dialog = true
-                            }
-                            .wrapContentHeight(),
-                        text = "open dialog",
-                        style = TextStyle(
-                            textAlign = TextAlign.Center,
-                            color = Color.White,
-                        ),
-                    )
-                    if (dialog) {
-                        OnDialog(
-                            onDismissRequest = {
-                                dialog = false
                             },
                         )
+                        if (dialog) {
+                            Dialog(
+                                modifier = Modifier
+                                    .defaultMinSize(280.dp)
+                                    .background(
+                                        color = Color.White,
+                                        shape = RoundedCornerShape(28.dp),
+                                    )
+                                    .padding(24.dp),
+                                onDismissRequest = { dialog = false },
+                                message = Dialog.Text(
+                                    modifier = Modifier,
+                                    value = "message",
+                                    style = TextStyle(fontSize = 14.sp),
+                                ),
+                            )
+                        }
                     }
                 }
             }
