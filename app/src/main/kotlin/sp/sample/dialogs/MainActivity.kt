@@ -188,26 +188,9 @@ internal class MainActivity : AppCompatActivity() {
                         )
                         if (dialog) {
                             Dialog(
-                                modifier = Modifier
-                                    .defaultMinSize(minWidth = 280.dp, minHeight = Dp.Unspecified)
-                                    .background(
-                                        color = Color.White,
-                                        shape = RoundedCornerShape(28.dp),
-                                    )
-                                    .padding(PaddingValues(24.dp)),
                                 onDismissRequest = { dialog = false },
-                                properties = DialogProperties(),
-                                title = Dialog.Text(
-                                    modifier = Modifier
-                                        .padding(bottom = 16.dp),
-                                    value = "foo bar",
-                                    style = TextStyle(fontSize = 24.sp),
-                                ),
-                                message = Dialog.Text(
-                                    modifier = Modifier,
-                                    value = "${System.currentTimeMillis()}ms",
-                                    style = TextStyle(fontSize = 14.sp),
-                                ),
+                                title = "foo bar",
+                                message = "${System.currentTimeMillis()}ms",
                             )
                         }
                     }
