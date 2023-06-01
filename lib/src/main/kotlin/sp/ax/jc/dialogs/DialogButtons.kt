@@ -5,11 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
@@ -29,10 +27,10 @@ import androidx.compose.ui.window.DialogProperties
 @Composable
 fun Dialog(
     modifier: Modifier,
-    alignment: Alignment.Horizontal,
     onDismissRequest: () -> Unit,
     properties: DialogProperties,
     message: Dialog.Text,
+    alignment: Alignment.Horizontal,
     button: Dialog.Text,
     vararg buttons: Dialog.Text,
 ) {
@@ -40,21 +38,22 @@ fun Dialog(
         onDismissRequest = onDismissRequest,
         properties = properties,
     ) {
-        Column(modifier = modifier, horizontalAlignment = alignment) {
+        Column(modifier = modifier) {
             check(message.value.isNotEmpty())
             BasicText(
                 modifier = message.modifier,
                 text = message.value,
                 style = message.style,
             )
-            Row(modifier = Modifier.align(Alignment.End)) {
+            Row(modifier = Modifier.align(alignment)) {
+                check(button.value.isNotEmpty())
                 BasicText(
                     modifier = button.modifier,
                     text = button.value,
                     style = button.style,
                 )
                 buttons.forEach {
-                    Spacer(modifier = Modifier.width(8.dp))
+                    check(it.value.isNotEmpty())
                     BasicText(
                         modifier = it.modifier,
                         text = it.value,
@@ -75,48 +74,54 @@ fun Dialog(
     color: Color = Color.White,
     shape: Shape = RoundedCornerShape(28.dp),
     padding: PaddingValues = PaddingValues(24.dp),
-    alignment: Alignment.Horizontal = Alignment.Start,
     onDismissRequest: () -> Unit,
     properties: DialogProperties = DialogProperties(),
     message: String,
+    space: Dp = 24.dp,
+    textStyle: TextStyle = TextStyle(fontSize = 14.sp, color = Color.Black),
+    style: Dialog.Buttons = Dialog.Buttons(
+        alignment = Alignment.End,
+        space = 8.dp,
+        padding = PaddingValues(start = 12.dp, end = 12.dp),
+        shape = RoundedCornerShape(20.dp),
+        height = 40.dp,
+        textStyle = TextStyle(fontSize = 14.sp, color = Color.Black)
+    ),
 ) {
     Dialog(
         modifier = Modifier
             .defaultMinSize(minWidth = minWidth, minHeight = minHeight)
-            .background(
-                color = color,
-                shape = shape,
-            )
+            .background(color = color, shape = shape)
             .padding(padding),
-        alignment = alignment,
         onDismissRequest = onDismissRequest,
         properties = properties,
         message = Dialog.Text(
-            modifier = Modifier
-                .padding(bottom = 24.dp),
+            modifier = Modifier.padding(bottom = space),
             value = message,
-            style = TextStyle(fontSize = 14.sp, color = Color.Black),
+            style = textStyle
         ),
+        alignment = style.alignment,
         button = Dialog.Text(
             modifier = Modifier
-                .clip(RoundedCornerShape(20.dp))
-                .height(40.dp)
+                .clip(style.shape)
+                .height(style.height)
                 .clickable(onClick = button.second)
-                .padding(start = 12.dp, end = 12.dp)
+                .padding(style.padding)
                 .wrapContentHeight(),
             value = button.first,
-            style = TextStyle(fontSize = 14.sp, color = Color.Black),
+            style = style.textStyle,
         ),
         buttons = buttons.map {
             Dialog.Text(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(20.dp))
-                    .height(40.dp)
+                    .padding(start = style.space)
+                    .clip(style.shape)
+                    .height(style.height)
                     .clickable(onClick = it.second)
-                    .padding(start = 12.dp, end = 12.dp)
+                    .padding(style.padding)
                     .wrapContentHeight(),
                 value = it.first,
-                style = TextStyle(fontSize = 14.sp, color = Color.Black),
+                style = style.textStyle,
             )
         }.toTypedArray()
     )

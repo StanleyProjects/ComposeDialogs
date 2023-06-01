@@ -225,6 +225,45 @@ internal class MainActivity : AppCompatActivity() {
                                 onDismissRequest = { dialog = false },
                                 message = "${System.currentTimeMillis()}ms",
                             )
+//                            Dialog(
+//                                modifier = Modifier
+//                                    .defaultMinSize(minWidth = 280.dp, minHeight = Dp.Unspecified)
+//                                    .background(
+//                                        color = Color.White,
+//                                        shape = RoundedCornerShape(28.dp),
+//                                    )
+//                                    .padding(PaddingValues(24.dp)),
+//                                onDismissRequest = { dialog = false },
+//                                properties = DialogProperties(),
+//                                message = Dialog.Text(
+//                                    modifier = Modifier.padding(bottom = 24.dp)
+//                                        .background(Color.Red).align(Alignment.End),
+//                                    value = "${System.currentTimeMillis()}ms",
+//                                    style = TextStyle(fontSize = 14.sp, color = Color.Black),
+//                                ),
+//                                alignment = Alignment.End,
+//                                Dialog.Text(
+//                                    modifier = Modifier
+//                                        .clip(RoundedCornerShape(20.dp))
+//                                        .height(40.dp)
+//                                        .clickable { dialog = false }
+//                                        .padding(start = 12.dp, end = 12.dp)
+//                                        .wrapContentHeight(),
+//                                    value = "foo",
+//                                    style = TextStyle(fontSize = 14.sp, color = Color.Black),
+//                                ),
+//                                Dialog.Text(
+//                                    modifier = Modifier
+//                                        .padding(start = 8.dp)
+//                                        .clip(RoundedCornerShape(20.dp))
+//                                        .height(40.dp)
+//                                        .clickable { dialog = false }
+//                                        .padding(start = 12.dp, end = 12.dp)
+//                                        .wrapContentHeight(),
+//                                    value = "bar",
+//                                    style = TextStyle(fontSize = 14.sp, color = Color.Black),
+//                                ),
+//                            )
                         }
                     }
                 }

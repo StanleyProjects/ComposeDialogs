@@ -1,6 +1,7 @@
 package sp.ax.jc.dialogs
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
@@ -8,7 +9,9 @@ import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -18,6 +21,15 @@ object Dialog {
         val modifier: Modifier,
         val value: String,
         val style: TextStyle,
+    )
+
+    data class Buttons(
+        val alignment: Alignment.Horizontal,
+        val space: Dp,
+        val padding: PaddingValues,
+        val shape: Shape,
+        val height: Dp,
+        val textStyle: TextStyle,
     )
 }
 
