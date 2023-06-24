@@ -31,7 +31,7 @@ fun Dialog(
     properties: DialogProperties,
     message: String,
     messageStyle: DialogText,
-    alignment: Alignment.Horizontal,
+    buttonsAlignment: Alignment.Horizontal,
     button: Pair<String, DialogText>,
     vararg buttons: Pair<String, DialogText>,
 ) {
@@ -46,7 +46,7 @@ fun Dialog(
                 text = message,
                 style = messageStyle.textStyle,
             )
-            Row(modifier = Modifier.align(alignment)) {
+            Row(modifier = Modifier.align(buttonsAlignment)) {
                 check(button.first.isNotEmpty())
                 BasicText(
                     modifier = button.second.modifier,
@@ -104,7 +104,7 @@ fun Dialog(
             modifier = Modifier.padding(bottom = space),
             textStyle = textStyle,
         ),
-        alignment = buttonsAlignment,
+        buttonsAlignment = buttonsAlignment,
         button = button.first to DialogText(
             modifier = Modifier
                 .clip(buttonStyle.shape)
