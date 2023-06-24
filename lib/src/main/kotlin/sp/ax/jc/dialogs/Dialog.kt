@@ -40,21 +40,21 @@ fun Dialog(
         properties = properties,
     ) {
         Column(modifier = modifier) {
-            check(message.isNotEmpty())
+            require(message.isNotEmpty())
             BasicText(
                 modifier = messageStyle.modifier,
                 text = message,
                 style = messageStyle.textStyle,
             )
             Row(modifier = Modifier.align(buttonsAlignment)) {
-                check(button.first.isNotEmpty())
+                require(button.first.isNotEmpty())
                 BasicText(
                     modifier = button.second.modifier,
                     text = button.first,
                     style = button.second.textStyle,
                 )
                 buttons.forEach { (text, style) ->
-                    check(text.isNotEmpty())
+                    require(text.isNotEmpty())
                     BasicText(
                         modifier = style.modifier,
                         text = text,
