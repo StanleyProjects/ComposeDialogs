@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -132,6 +133,7 @@ internal class MainActivity : AppCompatActivity() {
     override fun onCreate(inState: Bundle?) {
         super.onCreate(inState)
         setContent {
+            LocalContext
             val themeState = App.viewModel<ThemeViewModel>().state.collectAsState()
             Composition(themeState = themeState.value)
         }

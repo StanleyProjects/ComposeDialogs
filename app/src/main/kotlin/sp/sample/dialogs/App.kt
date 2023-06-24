@@ -8,6 +8,8 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import sp.ax.jc.dialogs.DialogStyle
+import sp.ax.jc.dialogs.LocalDialogStyle
 
 internal class App : Application() {
     object Theme {
@@ -23,11 +25,16 @@ internal class App : Application() {
             themeState: ThemeState,
             content: @Composable () -> Unit,
         ) {
+            val colors = when (themeState.colorsType) {
+                ColorsType.DARK -> Colors.Dark
+                ColorsType.LIGHT -> Colors.Light
+            }
             CompositionLocalProvider(
-                LocalColors provides when (themeState.colorsType) {
-                    ColorsType.DARK -> Colors.Dark
-                    ColorsType.LIGHT -> Colors.Light
-                },
+                LocalColors provides colors,
+                LocalDialogStyle provides DialogStyle(
+                    background = colors.background,
+                    foreground = colors.foreground,
+                ),
                 content = content,
             )
         }
