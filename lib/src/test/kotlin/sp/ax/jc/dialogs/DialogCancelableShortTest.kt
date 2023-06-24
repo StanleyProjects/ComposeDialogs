@@ -36,6 +36,8 @@ internal class DialogCancelableShortTest {
         val message = "message"
         val button = "button"
         val buttons = setOf("foo", "bar", "baz")
+        check(buttons.size > 1)
+        check(!buttons.contains(button))
         rule.setContent {
             var value by remember { mutableStateOf(false) }
             if (value) {
@@ -81,6 +83,7 @@ internal class DialogCancelableShortTest {
             .perform(ViewActions.click())
         rule.onNodeWithText(message).assertDoesNotExist()
         rule.onNodeWithTag(show).performClick()
+        rule.onNodeWithText(message).assertIsDisplayed()
         rule.onNodeWithTag(hide).performClick()
         rule.onNodeWithText(message).assertDoesNotExist()
     }
