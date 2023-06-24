@@ -96,6 +96,7 @@ internal class DialogTextsTest {
         rule.onNodeWithTag(dialog).onChildren().filterToOne(hasTextExactly(message)).assertIsDisplayed()
         rule.onNodeWithTag(dialog).onChildren().filterToOne(hasTextExactly(button)).assertIsDisplayed()
         check(buttons.size > 1)
+        check(!buttons.contains(button))
         buttons.forEach {
             rule.onNodeWithTag(dialog).onChildren().filterToOne(hasTextExactly(it)).assertIsDisplayed()
         }
