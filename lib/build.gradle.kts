@@ -6,6 +6,9 @@ import sp.gx.core.Maven
 import sp.gx.core.camelCase
 import sp.gx.core.check
 import sp.gx.core.colonCase
+import sp.gx.core.existing
+import sp.gx.core.file
+import sp.gx.core.filled
 import sp.gx.core.kebabCase
 import sp.gx.core.resolve
 
@@ -30,6 +33,7 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("org.gradle.jacoco")
+    id("io.gitlab.arturbosch.detekt") version Version.detekt
 }
 
 fun BaseVariant.getVersion(): String {
@@ -107,6 +111,58 @@ fun checkCoverage(variant: BaseVariant) {
     }
 }
 
+fun checkCodeQuality(variant: BaseVariant) {
+    val configs = setOf(
+        "comments",
+        "common",
+        "complexity",
+        "coroutines",
+        "empty-blocks",
+        "exceptions",
+        "naming",
+        "performance",
+        "potential-bugs",
+        "style",
+    ).map { config ->
+        rootDir.resolve("buildSrc/src/main/resources/detekt/config/$config.yml")
+            .existing()
+            .file()
+            .filled()
+    }
+    setOf(
+        Triple("main", variant.sourceSets.flatMap { it.kotlinDirectories }.distinctBy { it.absolutePath }, ""),
+        Triple("test", files("src/test/kotlin"), "UnitTest"),
+    ).forEach { (type, sources, postfix) ->
+        task<io.gitlab.arturbosch.detekt.Detekt>(camelCase("check", variant.name, "CodeQuality", postfix)) {
+            jvmTarget = Version.jvmTarget
+            setSource(sources)
+            when (type) {
+                "main" -> config.setFrom(configs)
+                "test" -> {
+                    val test = rootDir.resolve("buildSrc/src/main/resources/detekt/config/android/test.yml")
+                        .existing()
+                        .file()
+                        .filled()
+                    config.setFrom(configs + test)
+                }
+                else -> error("Type \"$type\" is not supported!")
+            }
+            reports {
+                html {
+                    required.set(true)
+                    outputLocation.set(buildDir.resolve("reports/analysis/code/quality/${variant.name}/$type/html/index.html"))
+                }
+                md.required.set(false)
+                sarif.required.set(false)
+                txt.required.set(false)
+                xml.required.set(false)
+            }
+            val detektTask = tasks.getByName<io.gitlab.arturbosch.detekt.Detekt>(camelCase("detekt", variant.name, postfix))
+            classpath.setFrom(detektTask.classpath)
+        }
+    }
+}
+
 android {
     namespace = "sp.ax.jc.dialogs"
     compileSdk = Version.Android.compileSdk
@@ -144,6 +200,7 @@ android {
         if (buildType.name == testBuildType) {
             checkCoverage(variant)
         }
+        checkCodeQuality(variant)
         afterEvaluate {
             tasks.getByName<JavaCompile>(camelCase("compile", variant.name, "JavaWithJavac")) {
                 targetCompatibility = Version.jvmTarget

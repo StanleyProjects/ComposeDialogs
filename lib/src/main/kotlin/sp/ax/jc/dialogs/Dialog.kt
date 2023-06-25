@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,11 +18,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
+@Suppress("LongParameterList")
 @Composable
 fun Dialog(
     modifier: Modifier,
@@ -66,30 +64,29 @@ fun Dialog(
     }
 }
 
+@Suppress("LongParameterList")
 @Composable
 fun Dialog(
     button: Pair<String, () -> Unit>,
     vararg buttons: Pair<String, () -> Unit>,
-    minWidth: Dp = 280.dp,
-    minHeight: Dp = Dp.Unspecified,
+    minWidth: Dp = DialogDefault.minWidth,
+    minHeight: Dp = DialogDefault.minHeight,
     foregroundColor: Color = LocalDialogStyle.current.foreground,
     backgroundColor: Color = LocalDialogStyle.current.background,
-    shape: Shape = RoundedCornerShape(28.dp),
-    padding: PaddingValues = PaddingValues(24.dp),
+    shape: Shape = DialogDefault.shape,
+    padding: PaddingValues = DialogDefault.padding,
     onDismissRequest: () -> Unit,
     properties: DialogProperties = DialogProperties(),
-    //
     message: String,
-    textStyle: TextStyle = TextStyle(fontSize = 14.sp, color = foregroundColor),
-    space: Dp = 24.dp,
-    //
-    buttonsAlignment: Alignment.Horizontal = Alignment.End,
-    buttonsSpace: Dp = 8.dp,
+    messageTextStyle: TextStyle = TextStyle(fontSize = DialogDefault.messageFontSize, color = foregroundColor),
+    space: Dp = DialogDefault.space,
+    buttonsAlignment: Alignment.Horizontal = DialogDefault.buttonsAlignment,
+    buttonsSpace: Dp = DialogDefault.buttonsSpace,
     buttonStyle: DialogButton = DialogButton(
-        padding = PaddingValues(start = 12.dp, end = 12.dp),
-        shape = RoundedCornerShape(20.dp),
-        height = 40.dp,
-        textStyle = TextStyle(fontSize = 14.sp, color = foregroundColor),
+        padding = DialogDefault.buttonPadding,
+        shape = DialogDefault.buttonShape,
+        height = DialogDefault.buttonHeight,
+        textStyle = TextStyle(fontSize = DialogDefault.buttonFontSize, color = foregroundColor),
     ),
 ) {
     Dialog(
@@ -102,7 +99,7 @@ fun Dialog(
         message = message,
         messageStyle = DialogText(
             modifier = Modifier.padding(bottom = space),
-            textStyle = textStyle,
+            textStyle = messageTextStyle,
         ),
         buttonsAlignment = buttonsAlignment,
         button = button.first to DialogText(
