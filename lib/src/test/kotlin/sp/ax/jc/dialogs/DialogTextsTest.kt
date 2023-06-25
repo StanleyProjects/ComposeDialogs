@@ -66,7 +66,7 @@ internal class DialogTextsTest {
                             modifier = Modifier,
                             textStyle = TextStyle(),
                         )
-                    }.toTypedArray()
+                    }.toTypedArray(),
                 )
             }
             Column(Modifier.fillMaxSize()) {

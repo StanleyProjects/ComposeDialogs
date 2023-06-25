@@ -122,7 +122,7 @@ internal class DialogColorsTest {
                 LocalDialogStyle provides DialogStyle(
                     background = backgroundColor,
                     foreground = foregroundColor,
-                )
+                ),
             ) {
                 dialogStyle = LocalDialogStyle.current
                 Dialog(

@@ -5,19 +5,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.test.junit4.createComposeRule
-import org.junit.Rule
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.text.TextStyle
@@ -25,6 +21,10 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.ViewMatchers
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 internal class DialogCancelableTest {
@@ -59,7 +59,7 @@ internal class DialogCancelableTest {
                     button = button to DialogText(
                         modifier = Modifier,
                         textStyle = TextStyle(),
-                    )
+                    ),
                 )
             }
             Column(Modifier.fillMaxSize()) {
@@ -126,7 +126,7 @@ internal class DialogCancelableTest {
                     button = button to DialogText(
                         modifier = Modifier,
                         textStyle = TextStyle(),
-                    )
+                    ),
                 )
             }
             Column(Modifier.fillMaxSize()) {
@@ -193,7 +193,7 @@ internal class DialogCancelableTest {
                     button = button to DialogText(
                         modifier = Modifier,
                         textStyle = TextStyle(),
-                    )
+                    ),
                 )
             }
             Column(Modifier.fillMaxSize()) {
@@ -258,7 +258,7 @@ internal class DialogCancelableTest {
                     button = button to DialogText(
                         modifier = Modifier,
                         textStyle = TextStyle(),
-                    )
+                    ),
                 )
             }
             Column(Modifier.fillMaxSize()) {
