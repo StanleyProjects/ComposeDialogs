@@ -1,5 +1,6 @@
 object Version {
     const val detekt = "1.23.0"
+    const val dokka = "1.8.20"
     const val jacoco = "0.8.9"
     const val jvmTarget = "11"
     const val kotlin = "1.7.10"
