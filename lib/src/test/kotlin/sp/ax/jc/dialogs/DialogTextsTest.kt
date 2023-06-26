@@ -1,14 +1,7 @@
 package sp.ax.jc.dialogs
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -25,6 +18,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import sp.ax.jc.dialogs.util.TestLayout
 
 @RunWith(RobolectricTestRunner::class)
 internal class DialogTextsTest {
@@ -40,12 +34,12 @@ internal class DialogTextsTest {
         val button = "button"
         val buttons = setOf("foo", "bar", "baz")
         rule.setContent {
-            var value by remember { mutableStateOf(false) }
-            if (value) {
+            val state = remember { mutableStateOf(false) }
+            if (state.value) {
                 Dialog(
                     modifier = Modifier.testTag(dialog),
                     onDismissRequest = {
-                        value = false
+                        state.value = false
                     },
                     properties = DialogProperties(
                         dismissOnBackPress = true,
@@ -69,26 +63,7 @@ internal class DialogTextsTest {
                     }.toTypedArray(),
                 )
             }
-            Column(Modifier.fillMaxSize()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .testTag(show)
-                        .clickable {
-                            value = true
-                        },
-                )
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .testTag(hide)
-                        .clickable {
-                            value = false
-                        },
-                )
-            }
+            TestLayout(show, hide, state)
         }
         rule.onNodeWithTag(dialog).assertDoesNotExist()
         rule.onNodeWithTag(show).performClick()

@@ -15,6 +15,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import sp.ax.jc.dialogs.util.hasTextColor
 
+@Suppress("StringLiteralDuplication")
 @RunWith(RobolectricTestRunner::class)
 internal class DialogColorsTest {
     @get:Rule
@@ -37,11 +38,12 @@ internal class DialogColorsTest {
                 message = message,
             )
         }
-        // todo background
+        @Suppress("IgnoredReturnValue")
         rule.onNode(isDialog())
             .assertExists()
             .assertIsDisplayed()
-            .onChildren().also { children ->
+            .onChildren()
+            .also { children ->
                 children.filterToOne(hasText(message))
                     .assertExists()
                     .assertIsDisplayed()
@@ -82,11 +84,12 @@ internal class DialogColorsTest {
         }
         check(checkNotNull(dialogStyle).foreground != foregroundColor)
         check(checkNotNull(dialogStyle).background != backgroundColor)
-        // todo background
+        @Suppress("IgnoredReturnValue")
         rule.onNode(isDialog())
             .assertExists()
             .assertIsDisplayed()
-            .onChildren().also { children ->
+            .onChildren()
+            .also { children ->
                 children.filterToOne(hasText(message))
                     .assertExists()
                     .assertIsDisplayed()
@@ -135,11 +138,12 @@ internal class DialogColorsTest {
         }
         check(checkNotNull(dialogStyle).foreground == foregroundColor)
         check(checkNotNull(dialogStyle).background == backgroundColor)
-        // todo background
+        @Suppress("IgnoredReturnValue")
         rule.onNode(isDialog())
             .assertExists()
             .assertIsDisplayed()
-            .onChildren().also { children ->
+            .onChildren()
+            .also { children ->
                 children.filterToOne(hasText(message))
                     .assertExists()
                     .assertIsDisplayed()
