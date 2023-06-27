@@ -1,0 +1,22 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:sp.ax.jc.dialogs////PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/index.html
+$dokka.location:sp.ax.jc.dialogs//Dialog/#androidx.compose.ui.Modifier#kotlin.Function0[kotlin.Unit]#androidx.compose.ui.window.DialogProperties#kotlin.String#sp.ax.jc.dialogs.DialogText#androidx.compose.ui.Alignment.Horizontal#kotlin.Pair[kotlin.String,sp.ax.jc.dialogs.DialogText]#kotlin.Array[kotlin.Pair[kotlin.String,sp.ax.jc.dialogs.DialogText]]/PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog.html
+$dokka.location:sp.ax.jc.dialogs//Dialog/#kotlin.Pair[kotlin.String,kotlin.Function0[kotlin.Unit]]#kotlin.Array[kotlin.Pair[kotlin.String,kotlin.Function0[kotlin.Unit]]]#androidx.compose.ui.unit.Dp#androidx.compose.ui.unit.Dp#androidx.compose.ui.graphics.Color#androidx.compose.ui.graphics.Color#androidx.compose.ui.graphics.Shape#androidx.compose.foundation.layout.PaddingValues#kotlin.Function0[kotlin.Unit]#androidx.compose.ui.window.DialogProperties#kotlin.String#androidx.compose.ui.text.TextStyle#androidx.compose.ui.unit.Dp#androidx.compose.ui.Alignment.Horizontal#androidx.compose.ui.unit.Dp#sp.ax.jc.dialogs.DialogButton/PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog.html
+$dokka.location:sp.ax.jc.dialogs//LocalDialogStyle/#/PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-local-dialog-style.html
+$dokka.location:sp.ax.jc.dialogs/DialogButton///PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog-button/index.html
+$dokka.location:sp.ax.jc.dialogs/DialogButton/DialogButton/#androidx.compose.foundation.layout.PaddingValues#androidx.compose.ui.graphics.Shape#androidx.compose.ui.unit.Dp#androidx.compose.ui.text.TextStyle/PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog-button/-dialog-button.html
+$dokka.location:sp.ax.jc.dialogs/DialogButton/height/#/PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog-button/height.html
+$dokka.location:sp.ax.jc.dialogs/DialogButton/padding/#/PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog-button/padding.html
+$dokka.location:sp.ax.jc.dialogs/DialogButton/shape/#/PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog-button/shape.html
+$dokka.location:sp.ax.jc.dialogs/DialogButton/textStyle/#/PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog-button/text-style.html
+$dokka.location:sp.ax.jc.dialogs/DialogStyle///PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog-style/index.html
+$dokka.location:sp.ax.jc.dialogs/DialogStyle/DialogStyle/#androidx.compose.ui.graphics.Color#androidx.compose.ui.graphics.Color/PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog-style/-dialog-style.html
+$dokka.location:sp.ax.jc.dialogs/DialogStyle/background/#/PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog-style/background.html
+$dokka.location:sp.ax.jc.dialogs/DialogStyle/foreground/#/PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog-style/foreground.html
+$dokka.location:sp.ax.jc.dialogs/DialogText///PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog-text/index.html
+$dokka.location:sp.ax.jc.dialogs/DialogText/DialogText/#androidx.compose.ui.Modifier#androidx.compose.ui.text.TextStyle/PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog-text/-dialog-text.html
+$dokka.location:sp.ax.jc.dialogs/DialogText/modifier/#/PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog-text/modifier.html
+$dokka.location:sp.ax.jc.dialogs/DialogText/textStyle/#/PointingToDeclaration/-compose-dialogs/sp.ax.jc.dialogs/-dialog-text/text-style.html
+sp.ax.jc.dialogs
+
