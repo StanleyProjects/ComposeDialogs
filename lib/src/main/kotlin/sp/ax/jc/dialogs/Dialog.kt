@@ -21,6 +21,49 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
+/**
+ * Usage:
+ * ```
+ * Dialog(
+ *     modifier = Modifier
+ *         .defaultMinSize(minWidth = 280.dp)
+ *         .background(color = Color.Black),
+ *     onDismissRequest = {},
+ *     properties = DialogProperties(),
+ *     message = "Lorem ipsum...",
+ *     messageStyle = DialogText(
+ *         modifier = Modifier,
+ *         textStyle = TextStyle(color = Color.White),
+ *     ),
+ *     buttonsAlignment = Alignment.End,
+ *     button = "foo" to DialogText(
+ *         modifier = Modifier
+ *             .clickable { foo() },
+ *         textStyle = TextStyle(color = Color.White),
+ *     ),
+ *     buttons = arrayOf(
+ *         "bar" to DialogText(
+ *             modifier = Modifier
+ *                 .clickable { bar() },
+ *             textStyle = TextStyle(color = Color.White),
+ *         )
+ *     ),
+ * )
+ * ```
+ *
+ * ```
+ * +-------------------+
+ * | Lorem ipsum...    |
+ * |                   |
+ * |       [foo] [bar] |
+ * +-------------------+
+ * ```
+ * @throws IllegalArgumentException if [message] is empty.
+ * @throws IllegalArgumentException if [button] has empty text.
+ * @throws IllegalArgumentException if one of [buttons] has empty text.
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.1.0
+ */
 @Suppress("LongParameterList")
 @Composable
 fun Dialog(
@@ -64,6 +107,27 @@ fun Dialog(
     }
 }
 
+/**
+ * Usage:
+ * ```
+ * Dialog(
+ *     "foo" to { foo() },
+ *     "bar" to { bar() },
+ *     onDismissRequest = {},
+ *     message = "Lorem ipsum...",
+ * )
+ * ```
+ *
+ * ```
+ * +-------------------+
+ * | Lorem ipsum...    |
+ * |                   |
+ * |       [foo] [bar] |
+ * +-------------------+
+ * ```
+ * @author [Stanley Wintergreen](https://github.com/kepocnhh)
+ * @since 0.1.0
+ */
 @Suppress("LongParameterList")
 @Composable
 fun Dialog(
